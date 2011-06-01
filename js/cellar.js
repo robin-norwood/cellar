@@ -41,10 +41,18 @@ var Game = function () {
         $(window).bind('keydown', function (e) {
             log("Key '" + e.which + "' pressed");
             switch(e.which) {
-              // case 37: // left
-              // case 38: // up
-              // case 39: // right
-              // case 40: // down
+              case 37: // left
+                entities.player.control_queue.push('left');
+                break;
+              case 38: // up
+                entities.player.control_queue.push('up');
+                break;
+              case 39: // right
+                entities.player.control_queue.push('right');
+                break;
+              case 40: // down
+                entities.player.control_queue.push('down');
+                break;
             }
             return true;
         });
@@ -64,6 +72,7 @@ var Game = function () {
         // // Update everything's state - if $player has moved, let
         // the rest of the world take its turn.
 
+        entities.player.control();
 
         // // Animate
 

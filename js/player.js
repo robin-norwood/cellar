@@ -1,9 +1,7 @@
 /*
-
    player.js - player class.
 
    Copyright (c) 2011 Robin Norwood <robin.norwood@gmail.com>
-
  */
 
 var Player = function (game) {
@@ -11,6 +9,8 @@ var Player = function (game) {
 
     // Private vars:
     var self = this; // Reference back to 'this' for private functions.
+
+    // FIXME - clean this up and put it in base prototype
     var src_img = $('#people_sprites').get(0);
     var src_sprite_size = [32,32];
     var sprite_count = 4;
@@ -19,41 +19,76 @@ var Player = function (game) {
 
     // Public vars:
     this.game = game;
+    this.control_queue = [];
+
+    // FIXME: This should get the 'x' and 'y' from base proto, but
+    // I've messed up the inheritence somehow. Duplicate x and y here too.
 
     this.state = $.extend({}, this.state);
     $.extend(this.state, {
-        img: undefined
+        x: 0,
+        y: 0
     });
 
     // Private functions:
 
     var init = function () {
-        self.state.img = new Image();
-        self.state.img.src = src_img.src;
+    };
+
+    var log = function (msg) {
+        if (console) {
+            console.log(msg);
+        }
     };
 
     // Public functions:
 
     this.control = function(cur_time, delta_time) {
         // Respond to keypresses, etc.
+        var took_turn = false;
 
-        return true;
+        if (this.control_queue.length > 0) {
+            took_turn = true;
+            var cmd = this.control_queue.shift();
+            log("Shifted '" + cmd + "'");
+            switch(cmd) {
+                case 'left':
+                  self.state.x -= 1;
+                  break;
+                case 'up':
+                  self.state.y -= 1;
+                  break;
+                case 'right':
+                  self.state.x += 1;
+                  break;
+                case 'down':
+                  self.state.y += 1;
+                  break;
+            }
+        }
+
+        return took_turn;
     };
 
     this.animate = function(cur_time, delta_time) {
         // draw a frame of animation for the entity.
+        // FIXME: Clean up and put in base prototype
 
         if (which_sprite == sprite_count) {
             which_sprite = 0;
         }
 
-        this.game.getScreen().getContext().drawImage(this.state.img,
+        log("Player at (" + this.state.x + ", " + this.state.y + ")");
+
+        // FIXME: screen should have a method for putting an entity on a grid,
+        // instead of going directly to context here.
+        this.game.getScreen().getContext().drawImage(src_img,
                                                      sprite_start[0] + src_sprite_size[0] * which_sprite,
                                                      sprite_start[1],
                                                      src_sprite_size[0],
                                                      src_sprite_size[1],
-                                                     0,
-                                                     0,
+                                                     this.state.x * 32,
+                                                     this.state.y * 32,
                                                      32,
                                                      32
                                                     );
