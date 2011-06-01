@@ -17,7 +17,7 @@ var Screen = function (game, canvas) {
 
     var init = function () {
         // One-time init stuff
-        context = canvas.getContext("2d");
+        context = canvas[0].getContext("2d");
 
     };
 

@@ -77,7 +77,7 @@ var Game = function () {
         // // Animate
 
         // Clear the screen
-        screen.getContext().clearRect(0, 0, canvas.width, canvas.height);
+        screen.getContext().clearRect(0, 0, canvas.attr("width"), canvas.attr("height"));
 
         // Draw
         $.each(entities, function (k, entity) {
@@ -99,7 +99,9 @@ var Game = function () {
     // Public methods:
     this.load = function () {
         /* Game initialization code.  Should run only once. */
-        canvas = $('#cellar_canvas')[0];
+        canvas = $('#cellar_canvas');
+        canvas.attr("width", 1024);
+        canvas.attr("height", 768);
         screen = new Screen(self, canvas);
 
         bindControls();
