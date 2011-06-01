@@ -11,18 +11,26 @@ var Player = function (game) {
 
     // Private vars:
     var self = this; // Reference back to 'this' for private functions.
+    var src_img = $('#people_sprites').get(0);
+    var src_sprite_size = [32,32];
+    var sprite_count = 4;
+    var sprite_start = [0,0];
+    var which_sprite = 0;
 
     // Public vars:
     this.game = game;
 
     this.state = $.extend({}, this.state);
     $.extend(this.state, {
-        img: $('#people_sprites')
+        img: undefined
     });
 
     // Private functions:
 
-    // None yet
+    var init = function () {
+        self.state.img = new Image();
+        self.state.img.src = src_img.src;
+    };
 
     // Public functions:
 
@@ -35,10 +43,27 @@ var Player = function (game) {
     this.animate = function(cur_time, delta_time) {
         // draw a frame of animation for the entity.
 
-        this.game.getScreen().getContext().drawImage(this.state.img.get(0), 0, 0);
+        if (which_sprite == sprite_count) {
+            which_sprite = 0;
+        }
+
+        this.game.getScreen().getContext().drawImage(this.state.img,
+                                                     sprite_start[0] + src_sprite_size[0] * which_sprite,
+                                                     sprite_start[1],
+                                                     src_sprite_size[0],
+                                                     src_sprite_size[1],
+                                                     0,
+                                                     0,
+                                                     32,
+                                                     32
+                                                    );
+
+        which_sprite++;
 
         return;
     };
+
+    init();
 
     return this;
 };
