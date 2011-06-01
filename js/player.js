@@ -9,12 +9,7 @@ var Player = function (game) {
 
     // Private vars:
     var self = this; // Reference back to 'this' for private functions.
-
-    // FIXME - clean this up and put it in base prototype
-    var src_img = $('#people_sprites').get(0);
-    var src_sprite_size = [32,32];
-    var sprite_count = 4;
-    var sprite_start = [0,0];
+    var sprite = new Sprite('people_sprites', {w:32, h:32}, 0, 4);
     var which_sprite = 0;
 
     // Public vars:
@@ -74,7 +69,7 @@ var Player = function (game) {
         // draw a frame of animation for the entity.
         // FIXME: Clean up and put in base prototype
 
-        if (which_sprite == sprite_count) {
+        if (which_sprite == sprite.frames.length) {
             which_sprite = 0;
         }
 
@@ -82,15 +77,15 @@ var Player = function (game) {
 
         // FIXME: screen should have a method for putting an entity on a grid,
         // instead of going directly to context here.
-        this.game.getScreen().getContext().drawImage(src_img,
-                                                     sprite_start[0] + src_sprite_size[0] * which_sprite,
-                                                     sprite_start[1],
-                                                     src_sprite_size[0],
-                                                     src_sprite_size[1],
-                                                     this.state.x * 32,
-                                                     this.state.y * 32,
-                                                     32,
-                                                     32
+        this.game.getScreen().getContext().drawImage(sprite.src_img,
+                                                     sprite.frames[0].x,
+                                                     sprite.frames[0].y,
+                                                     sprite.w,
+                                                     sprite.h,
+                                                     this.state.x * sprite.w,
+                                                     this.state.y * sprite.h,
+                                                     sprite.w,
+                                                     sprite.h
                                                     );
 
         which_sprite++;
