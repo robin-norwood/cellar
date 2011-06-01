@@ -9,7 +9,7 @@ var Player = function (game) {
 
     // Private vars:
     var self = this; // Reference back to 'this' for private functions.
-    var sprite = new Sprite('people_sprites', {w:32, h:32}, 0, 4);
+    var sprite = new Sprite('people_sprites', {w:32, h:32}, 12, 4);
     var which_sprite = 0;
 
     // Public vars:
