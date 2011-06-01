@@ -16,8 +16,11 @@ var Game = function () {
     // Private vars:
 
     var self = this;
+
     var canvas = undefined;
-    var context = undefined;
+    var screen = undefined;
+
+    var entities = {};
 
     var lastTime = (new Date()).getTime();
 
@@ -36,22 +39,12 @@ var Game = function () {
         /* Bind keyboard controls here */
 
         $(window).bind('keydown', function (e) {
+            log("Key '" + e.which + "' pressed");
             switch(e.which) {
-              // case 77: // m
-              //   var is_muted = self.audio.toggle_mute();
-              //   if (is_muted) {
-              //       self.entities.audio_indicator = new Indicator(self,
-              //                                                     self.canvas.width - 25,
-              //                                                     self.canvas.height - 25,
-              //                                                     'audio_mute');
-              //   }
-              //   else {
-              //       self.entities.audio_indicator = new Indicator(self,
-              //                                                     self.canvas.width - 25,
-              //                                                     self.canvas.height - 25,
-              //                                                     'audio',
-              //                                                     5000);
-              //   }
+              // case 37: // left
+              // case 38: // up
+              // case 39: // right
+              // case 40: // down
             }
             return true;
         });
@@ -68,35 +61,46 @@ var Game = function () {
         var deltaTime = curTime - lastTime;
         lastTime = curTime;
 
-        // // Update everything's state
+        // // Update everything's state - if $player has moved, let
+        // the rest of the world take its turn.
 
-        // // Draw
+
+        // // Animate
+
+        // Clear the screen
+        screen.getContext().clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw
+        $.each(entities, function (k, entity) {
+            screen.getContext().save();
+            entity.animate();
+            screen.getContext().restore();
+        });
 
         var time = (new Date()).getTime() - curTime;
         var delay = tics - time;
         if (delay < 0) {
             delay = 0;
-            self.log("Main loop took too long: " + time);
+            log("Main loop took too long: " + time);
         }
 
-//        $.doTimeout('update-game', delay, update);
+        $.doTimeout('update-game', delay, update);
    };
 
     // Public methods:
     this.load = function () {
         /* Game initialization code.  Should run only once. */
         canvas = $('#cellar_canvas')[0];
-        context = canvas.getContext("2d");
-
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        context.fillStyle = "#FF0000";
-
-        context.fillRect(50,25,50,50);
+        screen = new Screen(self, canvas);
 
         bindControls();
 
+        entities.player = new Player(this);
         $.doTimeout('update-game', tics, update);
+    };
+
+    this.getScreen = function () {
+        return screen;
     };
 
     return true;
