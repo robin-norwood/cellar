@@ -78,8 +78,8 @@ var Player = function (game) {
         // FIXME: screen should have a method for putting an entity on a grid,
         // instead of going directly to context here.
         this.game.getScreen().getContext().drawImage(sprite.src_img,
-                                                     sprite.frames[0].x,
-                                                     sprite.frames[0].y,
+                                                     sprite.frames[which_sprite].x,
+                                                     sprite.frames[which_sprite].y,
                                                      sprite.w,
                                                      sprite.h,
                                                      this.state.x * sprite.w,
