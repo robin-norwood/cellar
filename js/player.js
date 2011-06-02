@@ -10,7 +10,7 @@ var Player = function (game) {
     // Private vars:
     var self = this; // Reference back to 'this' for private functions.
     var sprite = new Sprite('people_sprites', {w:32, h:32}, 12, 4);
-    var which_sprite = 0;
+    var which_frame = 0;
 
     // Public vars:
     this.game = game;
@@ -69,26 +69,15 @@ var Player = function (game) {
         // draw a frame of animation for the entity.
         // FIXME: Clean up and put in base prototype
 
-        if (which_sprite == sprite.frames.length) {
-            which_sprite = 0;
+        if (which_frame == sprite.frames.length) {
+            which_frame = 0;
         }
 
         log("Player at (" + this.state.x + ", " + this.state.y + ")");
 
-        // FIXME: screen should have a method for putting an entity on a grid,
-        // instead of going directly to context here.
-        this.game.getScreen().getContext().drawImage(sprite.src_img,
-                                                     sprite.frames[which_sprite].x,
-                                                     sprite.frames[which_sprite].y,
-                                                     sprite.w,
-                                                     sprite.h,
-                                                     this.state.x * sprite.w,
-                                                     this.state.y * sprite.h,
-                                                     sprite.w,
-                                                     sprite.h
-                                                    );
+        this.game.getScreen().blit(sprite, which_frame, { x: this.state.x, y: this.state.y });
 
-        which_sprite++;
+        which_frame++;
 
         return;
     };
