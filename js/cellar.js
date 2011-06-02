@@ -22,6 +22,9 @@ var Game = function () {
     var screen = undefined;
 
     var entities = {};
+    var terrain = undefined;
+
+    var map = undefined;
 
     var lastTime = (new Date()).getTime();
 
@@ -58,10 +61,6 @@ var Game = function () {
             return true;
         });
 
-        $(window).bind('keyup', function (e) {
-            return true;
-        });
-
     };
 
     var update = function () {
@@ -81,6 +80,10 @@ var Game = function () {
         screen.getContext().clearRect(0, 0, canvas.attr("width"), canvas.attr("height"));
 
         // Draw
+        screen.getContext().save();
+        terrain.animate(map);
+        screen.getContext().restore();
+
         $.each(entities, function (k, entity) {
             screen.getContext().save();
             entity.animate();
@@ -106,12 +109,15 @@ var Game = function () {
     };
 
     // Public methods:
-    this.load = function () {
+    this.load = function (w, h) {
         /* Game initialization code.  Should run only once. */
         canvas = $('#cellar_canvas');
-        resize_canvas(1024, 768);
+        resize_canvas(w, h);
 
         bindControls();
+
+        map = new Map(this, 32, 24);
+        terrain = new Terrain(this);
 
         entities.player = new Player(this);
 
@@ -136,6 +142,6 @@ var Game = function () {
 // Init and run the game
 $(document).ready(function () {
     var game = new Game();
-    game.load();
+    game.load(1024, 768);
 });
 

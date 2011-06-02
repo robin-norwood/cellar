@@ -12,16 +12,18 @@ var Screen = function (game, canvas) {
     // Private vars:
     var self = this; // Reference back to 'this' for private functions.
     var context = undefined;
-    var blocks = { across: 32,
-                   down: 24 }; // # of blocks accross and down the screen.
     // HINT: the size of the canvas should be divisible by the # of blocks
+
+    // public vars:
+
+    this.blocks = { across: 32,
+                    down: 24 }; // # of blocks accross and down the screen.
 
     // Private functions:
 
     var init = function () {
         // One-time init stuff
         context = canvas[0].getContext("2d");
-
     };
 
     // Public functions:
@@ -29,7 +31,7 @@ var Screen = function (game, canvas) {
     this.blit = function (sprite, frame_num, loc) { // loc = { x: #, y: # }
         // FIXME: screen should have a method for putting an entity on a grid,
         // instead of going directly to context here.
-        var block_size = {w: canvas[0].width / blocks.across, h: canvas[0].height / blocks.down};
+        var block_size = {w: canvas[0].width / self.blocks.across, h: canvas[0].height / self.blocks.down};
         context.drawImage(sprite.src_img,
                           sprite.frames[frame_num].x,
                           sprite.frames[frame_num].y,
