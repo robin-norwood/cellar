@@ -29,15 +29,16 @@ var Screen = function (game, canvas) {
     this.blit = function (sprite, frame_num, loc) { // loc = { x: #, y: # }
         // FIXME: screen should have a method for putting an entity on a grid,
         // instead of going directly to context here.
+        var block_size = {w: canvas[0].width / blocks.across, h: canvas[0].height / blocks.down};
         context.drawImage(sprite.src_img,
                           sprite.frames[frame_num].x,
                           sprite.frames[frame_num].y,
                           sprite.w,
                           sprite.h,
-                          loc.x * sprite.w,
-                          loc.y * sprite.h,
-                          canvas[0].width / blocks.across,
-                          canvas[0].height / blocks.down
+                          loc.x * block_size.w,
+                          loc.y * block_size.h,
+                          block_size.w,
+                          block_size.h
                          );
     };
 

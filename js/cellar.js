@@ -12,6 +12,7 @@
  *  http://diveintohtml5.org/canvas.html
  */
 
+// FIXME: This is really just becoming the 'view', not the whole game.
 var Game = function () {
     // Private vars:
 
@@ -96,17 +97,32 @@ var Game = function () {
         $.doTimeout('update-game', delay, update);
    };
 
+    var resize_canvas = function (width, height) {
+        canvas.css("width", width);
+        canvas.css("height", height);
+        canvas.attr("width", width);
+        canvas.attr("height", height);
+        screen = new Screen(self, canvas);
+    };
+
     // Public methods:
     this.load = function () {
         /* Game initialization code.  Should run only once. */
         canvas = $('#cellar_canvas');
-        canvas.attr("width", 1024);
-        canvas.attr("height", 768);
-        screen = new Screen(self, canvas);
+        resize_canvas(1024, 768);
 
         bindControls();
 
         entities.player = new Player(this);
+
+        $('.resize_screen').click(function (event) {
+            event.preventDefault();
+
+            var size = event.target.value.split(' x ');
+            resize_canvas(parseInt(size[0]), parseInt(size[1]));
+            return false;
+        });
+
         $.doTimeout('update-game', tics, update);
     };
 

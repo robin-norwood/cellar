@@ -1,5 +1,3 @@
-o Scaling
-
 o terrain layer
 
 o map
@@ -14,3 +12,4 @@ o Write sprite prototype
 
 o abstract sprite drawing to the screen class instead of drawing on the context directly
 
+o Scale the canvas
