@@ -7,13 +7,10 @@
 var Player = function (game) {
     /* Base prototype for entities in the game. */
 
-    // Private vars:
-    var self = this; // Reference back to 'this' for private functions.
-    var sprite = new Sprite('people_sprites', {w:32, h:32}, 12, 4);
-    var which_frame = 0;
+    this._sprite = new Sprite('people_sprites', {w:32, h:32}, 12, 4);
+    this._which_frame = 0;
+    this._game = game;
 
-    // Public vars:
-    this.game = game;
     this.control_queue = [];
 
     // FIXME: This should get the 'x' and 'y' from base proto, but
@@ -24,67 +21,54 @@ var Player = function (game) {
         x: 0,
         y: 0
     });
+};
 
-    // Private functions:
-
-    var init = function () {
-    };
-
-    var log = function (msg) {
+Player.prototype = {
+    _log: function (msg) {
         if (console) {
             console.log(msg);
         }
-    };
-
-    // Public functions:
-
-    this.control = function(cur_time, delta_time) {
+    },
+    control: function(cur_time, delta_time) {
         // Respond to keypresses, etc.
         var took_turn = false;
 
         if (this.control_queue.length > 0) {
             took_turn = true;
             var cmd = this.control_queue.shift();
-            log("Shifted '" + cmd + "'");
+            this._log("Shifted '" + cmd + "'");
             switch(cmd) {
                 case 'left':
-                  self.state.x -= 1;
+                  this.state.x -= 1;
                   break;
                 case 'up':
-                  self.state.y -= 1;
+                  this.state.y -= 1;
                   break;
                 case 'right':
-                  self.state.x += 1;
+                  this.state.x += 1;
                   break;
                 case 'down':
-                  self.state.y += 1;
+                  this.state.y += 1;
                   break;
             }
         }
 
         return took_turn;
-    };
-
-    this.animate = function(cur_time, delta_time) {
+    },
+    animate: function(cur_time, delta_time) {
         // draw a frame of animation for the entity.
         // FIXME: Clean up and put in base prototype
 
-        if (which_frame == sprite.frames.length) {
-            which_frame = 0;
+        if (this._which_frame == this._sprite.frames.length) {
+            this._which_frame = 0;
         }
 
-        log("Player at (" + this.state.x + ", " + this.state.y + ")");
+        this._log("Player at (" + this.state.x + ", " + this.state.y + ")");
 
-        this.game.getScreen().blit(sprite, which_frame, { x: this.state.x, y: this.state.y });
+        this._game.getScreen().blit(this._sprite, this._which_frame, { x: this.state.x, y: this.state.y });
 
-        which_frame++;
+        this._which_frame++;
 
         return;
-    };
-
-    init();
-
-    return this;
+    }
 };
-
-Player.prototype = Entity;
