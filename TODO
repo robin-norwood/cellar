@@ -1,5 +1,3 @@
-o Fix JS object/prototype stuff
-
 o Do unit tests
 
 o Unhook animation loop from main loop == more better responsiveness
@@ -16,3 +14,4 @@ o terrain layer
 
 o map
 
+o Fix JS object/prototype stuff
