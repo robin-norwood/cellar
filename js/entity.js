@@ -26,7 +26,7 @@ Entity.prototype = {
         return true;
     },
 
-    animate: function(cur_time, delta_time) {
+    animate: function(screen, delta_time) {
         // draw a frame of animation for the entity.
 
         return;

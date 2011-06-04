@@ -5,7 +5,7 @@
  */
 
 var Map = function (game, width, height) {
-    this._types = ['water', 'woods', 'forest', 'hills', 'mountains'];
+    this._types = ['deepwater', 'water', 'woods', 'forest', 'hills', 'mountains'];
     this.the_map = [];
     this.width = width;
     this.height = height;

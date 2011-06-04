@@ -4,24 +4,22 @@
    Copyright (c) 2011 Robin Norwood <robin.norwood@gmail.com>
  */
 
-var Player = function (game) {
-    /* Base prototype for entities in the game. */
-
+var Player = function (x, y) {
     this._sprite = new Sprite('people_sprites', {w:32, h:32}, 12, 4);
     this._which_frame = 0;
-    this._game = game;
 
     this.control_queue = [];
     this.fps = 4;
     // FIXME: This should get the 'x' and 'y' from base proto, but
     // I've messed up the inheritence somehow. Duplicate x and y here too.
 
-    this.state = $.extend({}, this.state);
+    this.state = {};
     $.extend(this.state, {
-        x: 0,
-        y: 0,
+        x: x ? x : 0,
+        y: y ? y : 0,
         msSinceNewFrame: 0
     });
+
 };
 
 Player.prototype = {
@@ -47,16 +45,16 @@ Player.prototype = {
                   break;
                 case 'right':
                   this.state.x += 1;
-                  break;
+                break;
                 case 'down':
                   this.state.y += 1;
-                  break;
+                break;
             }
         }
 
         return took_turn;
     },
-    animate: function(deltaTime) {
+    animate: function(terrain, screen, deltaTime) {
         // draw a frame of animation for the entity.
         // FIXME: Clean up and put in base prototype
 
@@ -64,7 +62,7 @@ Player.prototype = {
             this._which_frame = 0;
         }
 
-        this._game.getScreen().blit(this._sprite, this._which_frame, { x: this.state.x, y: this.state.y });
+        screen.blit(this._sprite, this._which_frame, { x: this.state.x - terrain.state.x, y: this.state.y - terrain.state.y });
 
         this.state.msSinceNewFrame += deltaTime;
         if (this.state.msSinceNewFrame > 1000/this.fps) {

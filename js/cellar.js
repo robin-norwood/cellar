@@ -12,7 +12,7 @@
  *  http://diveintohtml5.org/canvas.html
  */
 
-// FIXME: This is really just becoming the 'view', not the whole game.
+// FIXME: This is really just becoming the 'viewport', not the whole game.
 var Game = function () {
     this._canvas = undefined;
     this._screen = undefined;
@@ -24,7 +24,9 @@ var Game = function () {
 
     this._lastTime = (new Date()).getTime();
 
-    this._tics = 33; // Minimum ms per update
+    this._tics = 66; // Minimum ms per update
+
+    this._updateView = true; // We need to recalculate and update the view
 };
 
 Game.prototype = {
@@ -53,6 +55,7 @@ Game.prototype = {
                 self._entities.player.control_queue.push('down');
                 break;
             }
+            self._updateView = true;
             return true;
         });
 
@@ -68,6 +71,11 @@ Game.prototype = {
 
         this._entities.player.control();
 
+        if (this._updateView) {
+            this._updateView = false;
+            this._log("Recalculating _terrain");
+            this._terrain.recalculate(this._map, this._screen, this._entities.player);
+        }
         // // Animate
 
         // Clear the screen
@@ -78,13 +86,13 @@ Game.prototype = {
 
         // Draw
         this._screen.getContext().save();
-        this._terrain.animate(this._map, deltaTime);
+        this._terrain.animate(this._map, this._screen, deltaTime);
         this._screen.getContext().restore();
 
         var self = this;
         $.each(this._entities, function (k, entity) {
             self._screen.getContext().save();
-            entity.animate(deltaTime);
+            entity.animate(self._terrain, self._screen, deltaTime);
             self._screen.getContext().restore();
         });
 
@@ -114,10 +122,11 @@ Game.prototype = {
 
         this._bindControls();
 
-        this._map = new Map(this, 32, 24);
+        this._map = new Map(this, 64, 48);
         this._terrain = new Terrain(this);
 
-        this._entities.player = new Player(this);
+        this._entities.player = new Player(Math.floor(this._map.width/2),
+                                           Math.floor(this._map.height/2));
 
         var self = this;
         $('.resize_screen').click(function (event) {
