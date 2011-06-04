@@ -12,7 +12,8 @@ var Entity = function (game) {
     this.game = game;
 
     this.state = {x: 0,
-                  y: 0
+                  y: 0,
+                  fps: 4
                  };
 
 };

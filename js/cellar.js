@@ -24,7 +24,7 @@ var Game = function () {
 
     this._lastTime = (new Date()).getTime();
 
-    this._tics = 250; // Minimum ms per update
+    this._tics = 33; // Minimum ms per update
 };
 
 Game.prototype = {
@@ -78,13 +78,13 @@ Game.prototype = {
 
         // Draw
         this._screen.getContext().save();
-        this._terrain.animate(this._map);
+        this._terrain.animate(this._map, deltaTime);
         this._screen.getContext().restore();
 
         var self = this;
         $.each(this._entities, function (k, entity) {
             self._screen.getContext().save();
-            entity.animate();
+            entity.animate(deltaTime);
             self._screen.getContext().restore();
         });
 

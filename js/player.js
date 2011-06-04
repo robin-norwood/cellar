@@ -12,14 +12,15 @@ var Player = function (game) {
     this._game = game;
 
     this.control_queue = [];
-
+    this.fps = 4;
     // FIXME: This should get the 'x' and 'y' from base proto, but
     // I've messed up the inheritence somehow. Duplicate x and y here too.
 
     this.state = $.extend({}, this.state);
     $.extend(this.state, {
         x: 0,
-        y: 0
+        y: 0,
+        msSinceNewFrame: 0
     });
 };
 
@@ -55,7 +56,7 @@ Player.prototype = {
 
         return took_turn;
     },
-    animate: function(cur_time, delta_time) {
+    animate: function(deltaTime) {
         // draw a frame of animation for the entity.
         // FIXME: Clean up and put in base prototype
 
@@ -63,11 +64,13 @@ Player.prototype = {
             this._which_frame = 0;
         }
 
-        this._log("Player at (" + this.state.x + ", " + this.state.y + ")");
-
         this._game.getScreen().blit(this._sprite, this._which_frame, { x: this.state.x, y: this.state.y });
 
-        this._which_frame++;
+        this.state.msSinceNewFrame += deltaTime;
+        if (this.state.msSinceNewFrame > 1000/this.fps) {
+            this._which_frame++;
+            this.state.msSinceNewFrame = 0;
+        }
 
         return;
     }

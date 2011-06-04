@@ -13,8 +13,9 @@ var Terrain = function (game) {
         hills: { sprite: new Sprite('terrain_sprites', {w:32, h:32}, 22, 1) },
         mountains: { sprite: new Sprite('terrain_sprites', {w:32, h:32}, 23, 1) }
     };
-    this.which_frame = 0;
+    this._which_frame = 0;
     this._game = game;
+    this.fps = 4;
 
     // FIXME: This should get the 'x' and 'y' from base proto, but
     // I've messed up the inheritence somehow. Duplicate x and y here too.
@@ -22,7 +23,8 @@ var Terrain = function (game) {
     this.state = $.extend({}, this.state);
     $.extend(this.state, {
         x: 0,
-        y: 0
+        y: 0,
+        msSinceNewFrame: 0
     });
 };
 
@@ -32,13 +34,12 @@ Terrain.prototype = {
             console.log(msg);
         }
     },
-
-    animate: function(map) {
+    animate: function(map, deltaTime) {
         // draw a frame of animation for the terrain.
         // FIXME: ...lots of stuff. Next make a big map and the screen only show part of it.
 
-        if (this.which_frame > 10) { // arbitrary - max 10 frames of terrain animation
-            this.which_frame = 0;
+        if (this._which_frame > 10) { // arbitrary - max 10 frames of terrain animation
+            this._which_frame = 0;
         }
 
         var screen = this._game.getScreen();
@@ -46,12 +47,16 @@ Terrain.prototype = {
             for(var y=0;y<screen.blocks.down;y++) {
                 var which_terrain = this.types[map.get(x, y).type];
                 screen.blit(which_terrain.sprite,
-                            this.which_frame % which_terrain.sprite.frames.length,
+                            this._which_frame % which_terrain.sprite.frames.length,
                             { x: x, y: y });
             }
         }
 
-        this.which_frame++;
+        this.state.msSinceNewFrame += deltaTime;
+        if (this.state.msSinceNewFrame > 1000/this.fps) {
+            this._which_frame++;
+            this.state.msSinceNewFrame = 0;
+        }
 
         return;
     }

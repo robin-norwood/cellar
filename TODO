@@ -1,6 +1,7 @@
-o Do unit tests
+o Center player on screen, let him 'walk' the map
 
-o Unhook animation loop from main loop == more better responsiveness
+o Do unit tests
+ - stuff is changing too rapidly...</excuse>
 
 --DONE--
 
@@ -15,3 +16,6 @@ o terrain layer
 o map
 
 o Fix JS object/prototype stuff
+
+o Unhook animation loop from main loop == more better responsiveness
+
