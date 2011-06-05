@@ -4,14 +4,32 @@ body {
     height: 100%;
 }
 
-#cellar_canvas {
-    position: absolute;
+#cellar_viewport {
     width: 1024px;
     height: 768px;
-
+    position: absolute;
+    top: 0px;
+    left: 5px;
     background-color: #050505;
+}
+
+.container {
+    position: relative;
+    width: 100%;
 }
 
 .sprite {
     display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+#edit_palette {
+    width: 32px;
+    height: 160px;
+    position: absolute;
+    top: 20px;
+    right: 5px;
 }

@@ -1,5 +1,17 @@
+o set mouse cursor with map editor
+
+o allow for better 'painting' with map editor
+
+o Show JSON with map editor
+
+o Unset #cellar_canvas background color and fix seams between blocks
+
+o Update prototype inheritence to new/better (maybe?) style
+
 o Do unit tests
  - stuff is changing too rapidly...</excuse>
+
+o Audio!
 
 --DONE--
 
@@ -19,3 +31,8 @@ o Unhook animation loop from main loop == more better responsiveness
 
 o Center player on screen, let him 'walk' the map
 
+o Load maps from stubbed out server layer.
+
+o Map editor
+
+o Add palette to map editor

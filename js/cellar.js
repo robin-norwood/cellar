@@ -13,14 +13,10 @@
  */
 
 "use strict";
-// FIXME: This is really just becoming the 'viewport', not the whole game.
+// FIXME: This is mixing main control logic and the main 'viewport' handling
 var Game = function () {
-    this._canvas = undefined;
-    this._screen = undefined;
-
     this._entities = {};
     this._terrain = undefined;
-
     this._map = undefined;
 
     this._lastTime = (new Date()).getTime();
@@ -30,14 +26,12 @@ var Game = function () {
     this._updateView = true; // We need to recalculate and update the view
 
     this._editMode = false;
+    this._editor = undefined;
 };
 
-Game.prototype = {
-    _log: function (msg) {
-        if (console) {
-            console.log(msg);
-        }
-    },
+Game.prototype = new ViewPort();
+$.extend(Game.prototype,
+  {
     _bindControls: function () {
         /* Bind keyboard controls here */
 
@@ -66,7 +60,9 @@ Game.prototype = {
             if (self._editMode) {
                 var block = self._screen.locToBlock(event.layerX, event.layerY);
 
-                self._map.set(block.across + self._terrain.state.x, block.down + self._terrain.state.y, 'mo');
+                self._map.set(block.across + self._terrain.state.x,
+                              block.down + self._terrain.state.y,
+                              self._editor.selected);
             }
         });
 
@@ -117,19 +113,26 @@ Game.prototype = {
         $.doTimeout('update-game', delay, function () { self._update(); });
     },
 
-    _resize_canvas: function (width, height) {
-        this._canvas.css("width", width);
-        this._canvas.css("height", height);
-        this._canvas.attr("width", width);
-        this._canvas.attr("height", height);
-        this._screen = new Screen(this, this._canvas, 25, 19);
+    _toggleEditMode: function () {
+        this._editMode = !this._editMode;
+
+        if (this._editMode) {
+            // Turning on edit mode
+
+            this._editor = new Editor(this._terrain.types);
+            $("#edit_palette").removeClass('hidden');
+        }
+        else {
+            // Turning off edit mode
+            $("#edit_palette").addClass('hidden');
+        }
     },
 
     // Public methods:
     load: function (w, h) {
         /* Game initialization code.  Should run only once. */
-        this._canvas = $('#cellar_canvas');
-        this._resize_canvas(w, h);
+        this._canvas = $('#cellar_viewport');
+        this._resize_canvas(w, h, 25, 19);
 
         this._bindControls();
 
@@ -144,22 +147,18 @@ Game.prototype = {
             event.preventDefault();
 
             var size = event.target.value.split(' x ');
-            self._resize_canvas(parseInt(size[0]), parseInt(size[1]));
+            self._resize_canvas(parseInt(size[0]), parseInt(size[1]), 25, 19);
             return false;
         });
 
         $('#edit_mode_toggle').click(function (event) {
-            self._editMode = !self._editMode;
+            self._toggleEditMode();
             return true;
         });
 
         $.doTimeout('update-game', this._tics, function () { self._update(); });
-    },
-
-    getScreen: function () {
-        return this._screen;
     }
-};
+});
 
 // Init and run the game
 $(document).ready(function () {

@@ -43,7 +43,7 @@
 
     <!-- Done with Sprites -->
 
-    Edit mode: <input type="checkbox" id="edit_mode_toggle" value=""/>
+    Edit mode: <input type="checkbox" id="edit_mode_toggle"/>
 
     <div class="sizer">
       <input type="submit" class="resize_screen" id="resize_screen_small" value="320 x 240"/>
@@ -52,18 +52,24 @@
       <input type="submit" class="resize_screen" id="resize_screen_big" value="1280 x 960"/>
     </div>
 
-    <canvas id="cellar_canvas">This demo only works on browsers that support HTML5.</canvas>
+    <div class="container">
+    <canvas id="cellar_viewport">This demo only works on browsers that support HTML5.</canvas>
 
+    <canvas class="hidden" id="edit_palette"></canvas>
+
+    </div>
     <!-- Javascript at the bottom for performance -->
 
     <script type="text/javascript" src="js/jquery/jquery-1.6.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.ba-dotimeout.js"></script>
+    <script type="text/javascript" src="js/viewport.js"></script>
     <script type="text/javascript" src="js/player.js"></script>
     <script type="text/javascript" src="js/terrain.js"></script>
     <script type="text/javascript" src="js/map.js"></script>
     <script type="text/javascript" src="js/sprite.js"></script>
     <script type="text/javascript" src="js/entity.js"></script>
     <script type="text/javascript" src="js/screen.js"></script>
+    <script type="text/javascript" src="js/editor.js"></script>
     <script type="text/javascript" src="js/cellar.js"></script>
 
     <!-- Done with Javascript -->
