@@ -22,5 +22,9 @@ Map.prototype = {
     get: function(x, y) {
         // return content at coordinates
         return this.the_map.map[x][y];
+    },
+    set: function(x, y, type) {
+        // set content at coordinates
+        return this.the_map.map[x][y] = type;
     }
 };

@@ -28,6 +28,8 @@ var Game = function () {
     this._tics = 66; // Minimum ms per update
 
     this._updateView = true; // We need to recalculate and update the view
+
+    this._editMode = false;
 };
 
 Game.prototype = {
@@ -58,6 +60,14 @@ Game.prototype = {
             }
             self._updateView = true;
             return true;
+        });
+
+        this._canvas.bind('click', function (event) {
+            if (self._editMode) {
+                var block = self._screen.locToBlock(event.layerX, event.layerY);
+
+                self._map.set(block.across + self._terrain.state.x, block.down + self._terrain.state.y, 'mo');
+            }
         });
 
     },
@@ -112,7 +122,7 @@ Game.prototype = {
         this._canvas.css("height", height);
         this._canvas.attr("width", width);
         this._canvas.attr("height", height);
-        this._screen = new Screen(this, this._canvas);
+        this._screen = new Screen(this, this._canvas, 25, 19);
     },
 
     // Public methods:
@@ -136,6 +146,11 @@ Game.prototype = {
             var size = event.target.value.split(' x ');
             self._resize_canvas(parseInt(size[0]), parseInt(size[1]));
             return false;
+        });
+
+        $('#edit_mode_toggle').click(function (event) {
+            self._editMode = !self._editMode;
+            return true;
         });
 
         $.doTimeout('update-game', this._tics, function () { self._update(); });

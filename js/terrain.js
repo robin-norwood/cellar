@@ -43,8 +43,8 @@ Terrain.prototype = {
             this._which_frame = 0;
         }
 
-        for(var x=0;x<screen.blocks.across;x++) {
-            for(var y=0;y<screen.blocks.down;y++) {
+        for(var x=0;x<screen.getBlocks().across;x++) {
+            for(var y=0;y<screen.getBlocks().down;y++) {
                 var which_terrain = this.types[map.get(this.state.x+x, this.state.y+y)];
                 screen.blit(which_terrain.sprite,
                             this._which_frame % which_terrain.sprite.frames.length,
@@ -62,17 +62,17 @@ Terrain.prototype = {
     },
     recalculate: function(map, screen, player) {
         // Recalculate x and y based upon player location.
-
-        var centerX = Math.floor(screen.blocks.across/2);
-        var centerY = Math.floor(screen.blocks.down/2);
+        var blocks = screen.getBlocks();
+        var centerX = Math.floor(blocks.across/2);
+        var centerY = Math.floor(blocks.down/2);
 
         var newX = player.state.x - centerX;
         var newY = player.state.y - centerY;
 
         newX = newX < 0 ? 0 : newX;
         newY = newY < 0 ? 0 : newY;
-        newX = newX > map.width - screen.blocks.across ? map.width - screen.blocks.across : newX;
-        newY = newY > map.height - screen.blocks.down ? map.height - screen.blocks.down : newY;
+        newX = newX > map.width - blocks.across ? map.width - blocks.across : newX;
+        newY = newY > map.height - blocks.down ? map.height - blocks.down : newY;
 
         this.state.x = newX;
         this.state.y = newY;
