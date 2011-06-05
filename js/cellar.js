@@ -12,6 +12,7 @@
  *  http://diveintohtml5.org/canvas.html
  */
 
+"use strict";
 // FIXME: This is really just becoming the 'viewport', not the whole game.
 var Game = function () {
     this._canvas = undefined;

@@ -4,6 +4,7 @@
    Copyright (c) 2011 Robin Norwood <robin.norwood@gmail.com>
  */
 
+"use strict";
 var Terrain = function (game, x, y) { // (x,y) are coordinates of UL corner in relation to the map
     this.types = {
         deepwater: { sprite: new Sprite('terrain_sprites', {w:32, h:32}, 4, 1) },

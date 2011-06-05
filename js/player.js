@@ -4,6 +4,7 @@
    Copyright (c) 2011 Robin Norwood <robin.norwood@gmail.com>
  */
 
+"use strict";
 var Player = function (x, y) {
     this._sprite = new Sprite('people_sprites', {w:32, h:32}, 12, 4);
     this._which_frame = 0;

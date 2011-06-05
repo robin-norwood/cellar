@@ -4,6 +4,7 @@
    Copyright (c) 2011 Robin Norwood <robin.norwood@gmail.com>
  */
 
+"use strict";
 var Map = function (game, width, height) {
     this._types = ['deepwater', 'water', 'woods', 'forest', 'hills', 'mountains'];
     this.the_map = [];

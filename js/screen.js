@@ -6,6 +6,7 @@
 
  */
 
+"use strict";
 var Screen = function (game, canvas) {
     // HINT: the size of the canvas should be divisible by the # of blocks
     this.blocks = { across: 25,

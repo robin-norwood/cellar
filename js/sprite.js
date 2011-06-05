@@ -6,6 +6,7 @@
 
  */
 
+"use strict";
 var Sprite = function (img_id, // id of the img dom element
                        sprite_size, // size of each sprite frame in the img: { w: #, h: # }
                        sprite_offset, // # of sprite frames before this sprite begins

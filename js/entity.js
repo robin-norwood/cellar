@@ -6,6 +6,7 @@
 
  */
 
+"use strict";
 var Entity = function (game) {
     /* Base prototype for entities in the game. */
 
