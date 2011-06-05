@@ -5,15 +5,16 @@
  */
 
 "use strict";
-var Terrain = function (game, x, y) { // (x,y) are coordinates of UL corner in relation to the map
-    this.types = {
-        deepwater: { sprite: new Sprite('terrain_sprites', {w:32, h:32}, 4, 1) },
-        water: { sprite: new Sprite('terrain_sprites', {w:32, h:32}, 5, 2) },
-        woods: { sprite: new Sprite('terrain_sprites', {w:32, h:32}, 20, 1) },
-        forest: { sprite: new Sprite('terrain_sprites', {w:32, h:32}, 21, 1) },
-        hills: { sprite: new Sprite('terrain_sprites', {w:32, h:32}, 22, 1) },
-        mountains: { sprite: new Sprite('terrain_sprites', {w:32, h:32}, 23, 1) }
-    };
+var Terrain = function (types) {
+    this.types = types;
+
+    $.each(types, function (idx, t) {
+        t.sprite = new Sprite(t.spriteDomId,
+                              {w:t.spriteWidth, h:t.spriteHeight},
+                              t.spriteStart,
+                              t.frames);
+    });
+
     this._which_frame = 0;
     this.fps = 4;
 
@@ -22,8 +23,8 @@ var Terrain = function (game, x, y) { // (x,y) are coordinates of UL corner in r
 
     this.state = {};
     $.extend(this.state, {
-        x: x,
-        y: y,
+        x: 0,
+        y: 0,
         msSinceNewFrame: 0
     });
 };
@@ -44,7 +45,7 @@ Terrain.prototype = {
 
         for(var x=0;x<screen.blocks.across;x++) {
             for(var y=0;y<screen.blocks.down;y++) {
-                var which_terrain = this.types[map.get(this.state.x+x, this.state.y+y).type];
+                var which_terrain = this.types[map.get(this.state.x+x, this.state.y+y)];
                 screen.blit(which_terrain.sprite,
                             this._which_frame % which_terrain.sprite.frames.length,
                             { x: x, y: y });

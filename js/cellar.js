@@ -123,8 +123,8 @@ Game.prototype = {
 
         this._bindControls();
 
-        this._map = new Map(this, 64, 48);
-        this._terrain = new Terrain(this);
+        this._map = new Map(wilderness_map);
+        this._terrain = new Terrain(terrain_types);
 
         this._entities.player = new Player(Math.floor(this._map.width/2),
                                            Math.floor(this._map.height/2));

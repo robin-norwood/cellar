@@ -1,0 +1,51 @@
+terrain_types = {
+    fr: { name: 'forest',
+          spriteDomId: 'terrain_sprites',
+          spriteWidth: 32,
+          spriteHeight: 32,
+          spriteStart: 21,
+          frames: 1
+        },
+    wo: { name: 'woods',
+          spriteDomId: 'terrain_sprites',
+          spriteWidth: 32,
+          spriteHeight: 32,
+          spriteStart: 20,
+          frames: 1
+        },
+    ws: { name: 'water',
+          spriteDomId: 'terrain_sprites',
+          spriteWidth: 32,
+          spriteHeight: 32,
+          spriteStart: 5,
+          frames: 2
+        },
+    wd: { name: 'deepwater',
+          spriteDomId: 'terrain_sprites',
+          spriteWidth: 32,
+          spriteHeight: 32,
+          spriteStart: 4,
+          frames: 1
+        },
+    hi: { name: 'hills',
+          spriteDomId: 'terrain_sprites',
+          spriteWidth: 32,
+          spriteHeight: 32,
+          spriteStart: 22,
+          frames: 1
+        },
+    gr: { name: 'grass',
+          spriteDomId: 'terrain_sprites',
+          spriteWidth: 32,
+          spriteHeight: 32,
+          spriteStart: 7,
+          frames: 1
+        },
+    mo: { name: 'mountains',
+          spriteDomId: 'terrain_sprites',
+          spriteWidth: 32,
+          spriteHeight: 32,
+          spriteStart: 23,
+          frames: 1
+        }
+}
