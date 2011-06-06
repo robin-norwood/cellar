@@ -13,7 +13,7 @@ body {
     background-color: #050505;
 }
 
-.container {
+#container {
     position: relative;
     width: 100%;
 }
@@ -36,4 +36,13 @@ body {
 
 .editing {
     cursor: crosshair;
+}
+
+#map_content {
+    position: absolute;
+
+    top: 1080px;
+
+    font-family: monospace;
+    font-size: 8px;
 }

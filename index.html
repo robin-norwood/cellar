@@ -52,16 +52,18 @@
       <input type="submit" class="resize_screen" id="resize_screen_big" value="1280 x 960"/>
     </div>
 
-    <div class="container">
-    <canvas id="cellar_viewport">This demo only works on browsers that support HTML5.</canvas>
+    <div id="container">
+      <canvas id="cellar_viewport">This demo only works on browsers that support HTML5.</canvas>
 
-    <canvas class="hidden editing" id="edit_palette"></canvas>
-
+      <canvas class="hidden editing" id="edit_palette"></canvas>
     </div>
+
+    <div id="map_content"></div>
     <!-- Javascript at the bottom for performance -->
 
     <script type="text/javascript" src="js/jquery/jquery-1.6.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.ba-dotimeout.js"></script>
+    <script type="text/javascript" src="js/json/json2.js"></script>
     <script type="text/javascript" src="js/viewport.js"></script>
     <script type="text/javascript" src="js/player.js"></script>
     <script type="text/javascript" src="js/terrain.js"></script>

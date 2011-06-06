@@ -74,6 +74,11 @@ $.extend(
             map.set(block.across + terrain.state.x,
                     block.down + terrain.state.y,
                     this.selected);
+            this.updateJSONView(map);
+        },
+        updateJSONView: function (map) {
+            $('#map_content').html(JSON.stringify(map.the_map.map));
+            $(window).scrollTop(0);
         }
 
 });

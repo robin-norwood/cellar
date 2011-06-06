@@ -41,18 +41,27 @@ $.extend(Game.prototype,
             switch(e.which) {
               case 37: // left
                 self._entities.player.control_queue.push('left');
+                e.preventDefault();
+                return false;
                 break;
               case 38: // up
                 self._entities.player.control_queue.push('up');
+                e.preventDefault();
+                return false;
                 break;
               case 39: // right
                 self._entities.player.control_queue.push('right');
+                e.preventDefault();
+                return false;
                 break;
               case 40: // down
                 self._entities.player.control_queue.push('down');
+                e.preventDefault();
+                return false;
                 break;
             }
             self._updateView = true;
+
             return true;
         });
 
@@ -160,11 +169,13 @@ $.extend(Game.prototype,
 
             var size = event.target.value.split(' x ');
             self._resize_canvas(parseInt(size[0]), parseInt(size[1]), 25, 19);
+            $(window).scrollTop(0);
             return false;
         });
 
         $('#edit_mode_toggle').click(function (event) {
             self._toggleEditMode();
+            $(window).scrollTop(0);
             return true;
         });
 
