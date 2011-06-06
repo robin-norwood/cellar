@@ -33,6 +33,16 @@ Screen.prototype = {
                                 this._blockSize.h
                                );
     },
+    drawBox: function (loc, strokeStyle, lineWidth) {
+        this._context.save();
+
+        this._context.strokeStyle = strokeStyle;
+        this._context.lineWidth = lineWidth;
+        this._context.strokeRect(loc.across * this._blockSize.w, loc.down * this._blockSize.h,
+                                this._blockSize.w, this._blockSize.h);
+
+        this._context.restore();
+    },
     getContext: function () {
         // getter for the context for raw access.
         // FIXME: Should never use this

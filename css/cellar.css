@@ -33,3 +33,7 @@ body {
     top: 20px;
     right: 5px;
 }
+
+.editing {
+    cursor: crosshair;
+}
