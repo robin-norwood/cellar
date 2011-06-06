@@ -65,6 +65,12 @@ $.extend(Game.prototype,
             }
         });
 
+        this._canvas.bind('mouseout', function(event) {
+            if (self._editMode) {
+                self._canvas.unbind('mousemove');
+            }
+        });
+
         this._canvas.bind('mouseup', function (event) {
             if (self._editMode) {
                 self._canvas.unbind('mousemove');
