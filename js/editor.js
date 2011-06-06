@@ -67,7 +67,13 @@ $.extend(
             });
 
             this._screen.drawBox(this.terrain_types[this.selected].loc, 'red', 2);
-        }
+        },
+        editLoc: function (map, screen, terrain, x, y) {
+            var block = screen.locToBlock(x, y);
 
+            map.set(block.across + terrain.state.x,
+                    block.down + terrain.state.y,
+                    this.selected);
+        }
 
 });

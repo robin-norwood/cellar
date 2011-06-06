@@ -56,13 +56,18 @@ $.extend(Game.prototype,
             return true;
         });
 
-        this._canvas.bind('click', function (event) {
+        this._canvas.bind('mousedown', function (event) {
             if (self._editMode) {
-                var block = self._screen.locToBlock(event.layerX, event.layerY);
+                self._editor.editLoc(self._map, self._screen, self._terrain, event.layerX, event.layerY);
+                self._canvas.bind('mousemove', function (innerEvent) {
+                    self._editor.editLoc(self._map, self._screen, self._terrain, innerEvent.layerX, innerEvent.layerY);
+                });
+            }
+        });
 
-                self._map.set(block.across + self._terrain.state.x,
-                              block.down + self._terrain.state.y,
-                              self._editor.selected);
+        this._canvas.bind('mouseup', function (event) {
+            if (self._editMode) {
+                self._canvas.unbind('mousemove');
             }
         });
 
@@ -118,12 +123,13 @@ $.extend(Game.prototype,
 
         if (this._editMode) {
             // Turning on edit mode
-
+            this._canvas.addClass('editing');
             this._editor = new Editor(this._terrain.types);
             $("#edit_palette").removeClass('hidden');
         }
         else {
             // Turning off edit mode
+            this._canvas.removeClass('editing');
             $("#edit_palette").addClass('hidden');
         }
     },
