@@ -38,29 +38,31 @@ $.extend(Game.prototype,
         var self = this;
         $(window).bind('keydown', function (e) {
             self._log("Key '" + e.which + "' pressed");
+            var caughtKey = false;
             switch(e.which) {
               case 37: // left
                 self._entities.player.control_queue.push('left');
-                e.preventDefault();
-                return false;
+                caughtKey = true;
                 break;
               case 38: // up
                 self._entities.player.control_queue.push('up');
-                e.preventDefault();
-                return false;
+                caughtKey = true;
                 break;
               case 39: // right
                 self._entities.player.control_queue.push('right');
-                e.preventDefault();
-                return false;
+                caughtKey = true;
                 break;
               case 40: // down
                 self._entities.player.control_queue.push('down');
-                e.preventDefault();
-                return false;
+                caughtKey = true;
                 break;
             }
-            self._updateView = true;
+
+            if (caughtKey) {
+                self._updateView = true;
+                e.preventDefault();
+                return false;
+            }
 
             return true;
         });
@@ -186,6 +188,6 @@ $.extend(Game.prototype,
 // Init and run the game
 $(document).ready(function () {
     var game = new Game();
-    game.load(1024, 768);
+    game.load(640, 480);
 });
 

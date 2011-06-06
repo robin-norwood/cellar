@@ -77,6 +77,7 @@ Terrain.prototype = {
         this.state.x = newX;
         this.state.y = newY;
 
+        this._log("Now terrain at: (" + newX + "," + newY + ")");
         return;
     }
 };
