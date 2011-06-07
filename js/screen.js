@@ -27,10 +27,10 @@ Screen.prototype = {
                                 sprite.frames[frame_num].y,
                                 sprite.w,
                                 sprite.h,
-                                loc.x * this._blockSize.w,
-                                loc.y * this._blockSize.h,
-                                this._blockSize.w,
-                                this._blockSize.h
+                                loc.x * this._blockSize.w + .5,
+                                loc.y * this._blockSize.h + .5,
+                                this._blockSize.w + .5,
+                                this._blockSize.h + .5
                                );
     },
     drawBox: function (loc, strokeStyle, lineWidth) {
@@ -38,8 +38,8 @@ Screen.prototype = {
 
         this._context.strokeStyle = strokeStyle;
         this._context.lineWidth = lineWidth;
-        this._context.strokeRect(loc.across * this._blockSize.w, loc.down * this._blockSize.h,
-                                this._blockSize.w, this._blockSize.h);
+        this._context.strokeRect(loc.across * this._blockSize.w + .5, loc.down * this._blockSize.h + .5,
+                                this._blockSize.w - .5, this._blockSize.h - .5);
 
         this._context.restore();
     },

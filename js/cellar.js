@@ -155,7 +155,7 @@ $.extend(Game.prototype,
     load: function (w, h) {
         /* Game initialization code.  Should run only once. */
         this._canvas = $('#cellar_viewport');
-        this._resize_canvas(w, h, 25, 19);
+        this._resize_canvas(w, h, 25, 25);
 
         this._bindControls();
 

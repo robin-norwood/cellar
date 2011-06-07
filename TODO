@@ -1,5 +1,3 @@
-o Show JSON with map editor
-
 o Unset #cellar_canvas background color and fix seams between blocks
 
 o Update prototype inheritence to new/better (maybe?) style
@@ -8,6 +6,9 @@ o Do unit tests
  - stuff is changing too rapidly...</excuse>
 
 o Audio!
+
+o Don't let player outrun screen updates
+ - Limit turn/keyboard input rate to animation cycle
 
 --DONE--
 
@@ -36,4 +37,6 @@ o Add palette to map editor
 o set mouse cursor with map editor
 
 o allow for better 'painting' with map editor
+
+o Show JSON with map editor
 
