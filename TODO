@@ -1,4 +1,6 @@
-o Update prototype inheritence to new/better (maybe?) style
+o Use requestAnimFrame for animation instead of rolling our own.
+
+o Look into jquery hotkeys plugin
 
 o Do unit tests
  - stuff is changing too rapidly...</excuse>
@@ -39,4 +41,6 @@ o allow for better 'painting' with map editor
 o Show JSON with map editor
 
 o Unset #cellar_canvas background color and fix seams between blocks
+
+o Update prototype inheritence to new/better (maybe?) style
 
