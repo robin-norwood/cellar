@@ -11,7 +11,7 @@ application = app.wsgifunc()
 
 class levels:
     level_map = {
-        'wilderness': 'wilderness.json'
+        'wilderness': '/var/www/cellar/wilderness.json'
         }
 
     def GET(self, name):
